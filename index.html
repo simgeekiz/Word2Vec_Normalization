@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Simge Ekiz">
+    <title>TxMM project t-SNE Graph</title>
+
+  </head>
+
+  <body>
+
+    <div id="loading" style="position:absolute; padding:30vh 65vh; font-size:3em;">
+      Loading data... Please wait...
+    </div>
+    <div id="myDiv" style="width:98vw; height:95vh;"></div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script>
+
+    function print_tsne (tsne_data) {
+      var data = [{
+        x: tsne_data.x,
+        y: tsne_data.y,
+        mode: 'markers+text',
+        type: 'scatter',
+        name: 't-SNE data',
+        text: tsne_data.word,
+        textposition: 'top center',
+        textfont: {
+          family:  'Raleway, sans-serif'
+        },
+        marker: {
+          size: 8
+        }
+      }];
+      // var data = [ trace1 ];
+      var layout = {
+        xaxis: {
+          autorange: true
+        },
+        yaxis: {
+          autorange: true
+        },
+        legend: {
+          y: 0.5,
+          yref: 'paper',
+          font: {
+            family: 'Arial, sans-serif',
+            size: 6,
+            color: 'grey',
+          }
+        },
+        title:'t-SNE'
+      };
+      Plotly.newPlot('myDiv', data, layout);
+      var loadingText = document.getElementById('loading');
+      loadingText.style.display = 'none';
+    }
+
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType('application/json');
+    xobj.open('GET', 'https://raw.githubusercontent.com/simgeekiz/Word2Vec_Normalization/master/veri/tsne_for_chart.json', true);
+    xobj.onreadystatechange = function() {
+      if (xobj.readyState == 4 && xobj.status == '200') {
+        var tsne_data = JSON.parse(xobj.responseText);
+        print_tsne(tsne_data);
+      } else {
+        var loadingText = document.getElementById('loading');
+        loadingText.style.color = 'red';
+        loadingText.innerHTML = 'Data Loading Failed!';
+      }
+    }
+    xobj.send(null);
+
+    </script>
+
+  </body>
+
+</html>

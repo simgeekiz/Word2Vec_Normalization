@@ -69,11 +69,12 @@
       if (xobj.readyState == 4 && xobj.status == '200') {
         var tsne_data = JSON.parse(xobj.responseText);
         print_tsne(tsne_data);
-      } else {
-        var loadingText = document.getElementById('loading');
-        loadingText.style.color = 'red';
-        loadingText.innerHTML = 'Data Loading Failed!';
-      }
+      } 
+      //else {
+      //  var loadingText = document.getElementById('loading');
+      //  loadingText.style.color = 'red';
+      //  loadingText.innerHTML = 'Data Loading Failed!';
+      //}
     }
     xobj.send(null);
 

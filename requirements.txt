@@ -1,5 +1,6 @@
 appnope==0.1.0
 astroid==1.5.3
+backports-abc==0.5
 bleach==2.1.1
 boto==2.48.0
 bz2file==0.98
@@ -34,6 +35,7 @@ nbformat==4.4.0
 nltk==3.2.5
 notebook==5.2.1
 numpy==1.13.3
+pandas==0.21.0
 pandocfilters==1.4.2
 parso==0.1.0
 pexpect==4.3.0
@@ -57,6 +59,7 @@ terminado==0.7
 testpath==0.3.1
 tornado==4.5.2
 traitlets==4.3.2
+typing==3.6.2
 urllib3==1.22
 wcwidth==0.1.7
 webencodings==0.5.1

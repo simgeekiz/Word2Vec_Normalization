@@ -19,7 +19,7 @@ LOGGER = logging.getLogger('generic_io')
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    filename='mail.log',
+                    filename='generic.log',
                     filemode='w')
 
 def load_from_file(file_path, file_format='auto', broken=False):

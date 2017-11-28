@@ -64,17 +64,17 @@
 
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType('application/json');
-    xobj.open('GET', 'https://raw.githubusercontent.com/simgeekiz/Word2Vec_Norm_Chart_Data/master/tsne_for_chart.json', true);
+    xobj.open('GET', 'https://raw.githubusercontent.com/simgeekiz/Word2Vec_Normalization/master/veri/tsne_for_chart.json', true);
     xobj.onreadystatechange = function() {
       if (xobj.readyState == 4 && xobj.status == '200') {
         var tsne_data = JSON.parse(xobj.responseText);
         print_tsne(tsne_data);
-      } 
-      //else {
-      //  var loadingText = document.getElementById('loading');
-      //  loadingText.style.color = 'red';
-      //  loadingText.innerHTML = 'Data Loading Failed!';
-      //}
+      }
+      // } else {
+      //   var loadingText = document.getElementById('loading');
+      //   loadingText.style.color = 'red';
+      //   loadingText.innerHTML = 'Data Loading Failed!';
+      // }
     }
     xobj.send(null);
 

@@ -44,10 +44,16 @@ def main():
 
     tweetlist = []
     for item in data_:
-        item['text'] = re.sub(r'https?[^\s]*', 'urlurlurl', item['text'])
-        item['text'] = re.sub(r'(?<!\w)@\w{1,15}(?!\w)', 'usrusrusr', item['text'])
-        tokenized_tweet = tknzr.tokenize(item['text'])
-        tweetlist.append(tokenized_tweet)
+        if detect(item['text']) == 'en':
+            item['text'] = re.sub("https?[^\s]*", "http://someurl", item['text'])
+            item['text'] = re.sub("(?<!\w)@\w{1,15}(?!\w)", "@someuser", item['text'])
+            #item['text'] = re.sub("\s\d*(\.|\:)?\d*\s", " digit ", item['text'])
+            item['text'] = re.sub("(\d+(/|-)\d+(/|-)\d+)", " date ", item['text'])
+            item['text'] = re.sub("\s\d?\d(:|,|.)\d\d\s?(A|a|P|p)(M|m)", " clock ", item['text'])
+            item['text'] = re.sub('[\U0001f600-\U0001f650]', " emoticon", item['text'])
+            tokenized_tweet = tknzr.tokenize(item['text'].lower())
+            tweetlist.append(tokenized_tweet)
+
 
     ####################
     # Word2Vec

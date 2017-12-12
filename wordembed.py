@@ -6,6 +6,8 @@ import logging
 from gensim.models import Word2Vec
 from nltk.tokenize import TweetTokenizer
 from sklearn.manifold import TSNE
+from langdetect import detect
+import datefinder
 import generic_io
 
 LOGGER = logging.getLogger('wordembed')
@@ -38,21 +40,29 @@ def main():
     # Data Preprocessing
     ####################
 
-    LOGGER.info('Preprocessing')
+    LOGGER.info("Preprocessing")
 
     tknzr = TweetTokenizer()
 
+    no_language_detected = []
     tweetlist = []
     for item in data_:
-        if detect(item['text']) == 'en':
-            item['text'] = re.sub("https?[^\s]*", "http://someurl", item['text'])
-            item['text'] = re.sub("(?<!\w)@\w{1,15}(?!\w)", "@someuser", item['text'])
-            #item['text'] = re.sub("\s\d*(\.|\:)?\d*\s", " digit ", item['text'])
-            item['text'] = re.sub("(\d+(/|-)\d+(/|-)\d+)", " date ", item['text'])
-            item['text'] = re.sub("\s\d?\d(:|,|.)\d\d\s?(A|a|P|p)(M|m)", " clock ", item['text'])
-            item['text'] = re.sub('[\U0001f600-\U0001f650]', " emoticon", item['text'])
-            tokenized_tweet = tknzr.tokenize(item['text'].lower())
-            tweetlist.append(tokenized_tweet)
+        try:
+            if detect(item['text']) == 'en':
+                item['text'] = re.sub("https?[^\s]*", " http://someurl ", item['text'])
+                item['text'] = re.sub("(?<!\w)@\w{1,15}(?!\w)", " @someuser ", item['text'])
+                #item['text'] = re.sub("\s\d*(\.|\:)?\d*\s", " digit ", item['text'])
+                item['text'] = re.sub("(\d+(/|-)\d+(/|-)\d+)", " date ", item['text'])
+                item['text'] = re.sub("\s\d?\d(:|,|.)\d\d\s?(A|a|P|p)(M|m)", " clock ", item['text'])
+                item['text'] = re.sub('[\U0001f600-\U0001f650]', " emoticon ", item['text'])
+                tokenized_tweet = tknzr.tokenize(item['text'].lower())
+                tweetlist.append(tokenized_tweet)
+        except Exception as e:
+            LOGGER.info("No language detected for " + item['text'])
+            no_language_detected.append(item['text'])
+
+    generic_io.save_to_file(data_=no_language_detected, file_path='veri/noLang/no_language_detected_' + \
+                            str(len(no_language_detected)) + '.pickle')
 
 
     ####################

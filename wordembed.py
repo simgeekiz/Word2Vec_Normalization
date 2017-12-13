@@ -44,6 +44,13 @@ def main():
 
     tknzr = TweetTokenizer()
 
+    emoji_pattern = re.compile("["
+            u"\U0001F600-\U0001F64F"  # emoticons
+            u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+            u"\U0001F680-\U0001F6FF"  # transport & map symbols
+            u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                               "]+", flags=re.UNICODE)
+
     no_language_detected = []
     tweetlist = []
     for item in data_:
@@ -54,7 +61,8 @@ def main():
                 #item['text'] = re.sub("\s\d*(\.|\:)?\d*\s", " digit ", item['text'])
                 item['text'] = re.sub("(\d+(/|-)\d+(/|-)\d+)", " date ", item['text'])
                 item['text'] = re.sub("\s\d?\d(:|,|.)\d\d\s?(A|a|P|p)(M|m)", " clock ", item['text'])
-                item['text'] = re.sub('[\U0001f600-\U0001f650]', " emoticon ", item['text'])
+                item['text'] = emoji_pattern.sub('[\U0001f600-\U0001f650]', "", item['text'])
+                item['text'] = re.sub('#.*(\s|\n)', "", item['text'])
                 tokenized_tweet = tknzr.tokenize(item['text'].lower())
                 tweetlist.append(tokenized_tweet)
         except Exception as e:

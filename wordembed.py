@@ -80,7 +80,7 @@ def main():
     LOGGER.info('Training word2vec')
 
     # train model
-    model = Word2Vec(tweetlist, min_count=1)
+    model = Word2Vec(tweetlist, min_count=5)
 
     # save model
     model.save('veri/models/w2v_model_earthquake_' + str(len(tweetlist)) + '.bin')

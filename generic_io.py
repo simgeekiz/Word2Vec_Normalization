@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 
 """Defines the functions to load and save data from various sources.
-
-
-
-
-
 """
 
 import os

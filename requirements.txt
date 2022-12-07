@@ -4,7 +4,7 @@ backports-abc==0.5
 bleach==2.1.1
 boto==2.48.0
 bz2file==0.98
-certifi==2017.11.5
+certifi==2022.12.7
 chardet==3.0.4
 cycler==0.10.0
 datefinder==0.6.1
